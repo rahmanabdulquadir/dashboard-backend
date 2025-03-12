@@ -8,11 +8,12 @@ import { JwtStrategy } from './jwt.strategy';
 @Module({
   imports: [
     JwtModule.register({
-      secret: 'your_secret_key', // Store in ENV file
+      secret: process.env.JWT_SECRET || 'your-secret-key',
       signOptions: { expiresIn: '1d' },
     }),
   ],
+  providers: [AuthService, JwtStrategy, PrismaService],
   controllers: [AuthController],
-  providers: [AuthService, PrismaService, JwtStrategy],
+  exports: [AuthService, JwtModule], // <-- Ensure JwtModule is exported
 })
 export class AuthModule {}
