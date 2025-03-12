@@ -5,8 +5,8 @@ import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse, ApiBody } from '@nes
 import { CreateUserDto } from './create-user.dto';
 
 
-@ApiTags('Users') // Grouping under 'Users' in Swagger
-@ApiBearerAuth()  // Enable JWT Authentication for protected routes
+@ApiTags('Users')
+@ApiBearerAuth() 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -29,7 +29,7 @@ export class UserController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiBody({ type: CreateUserDto }) // Swagger DTO for request body
+  @ApiBody({ type: CreateUserDto })
   @ApiResponse({ status: 201, description: 'User created successfully' })
   createUser(@Body() body: CreateUserDto) {
     return this.userService.createUser(body.name, body.email, body.password);
