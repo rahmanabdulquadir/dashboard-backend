@@ -1,13 +1,18 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+
+import { ValidationPipe } from '@nestjs/common';
+import { SignupDto } from './signup.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signup')
-  async signup(@Body() body: { name: string; email: string; password: string }) {
-    return this.authService.signup(body.name, body.email, body.password);
+  @UsePipes(new ValidationPipe()) // Enable validation
+  async signup(@Body() signupDto: SignupDto) {
+    return this.authService.signup(signupDto);
   }
 
   @Post('login')

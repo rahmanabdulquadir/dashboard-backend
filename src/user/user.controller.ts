@@ -4,6 +4,7 @@ import { JwtAuthGuard } from '../auth/jwt.guard';
 import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { CreateUserDto } from './create-user.dto';
 
+
 @ApiTags('Users') // Grouping under 'Users' in Swagger
 @ApiBearerAuth()  // Enable JWT Authentication for protected routes
 @Controller('users')
@@ -33,6 +34,8 @@ export class UserController {
   createUser(@Body() body: CreateUserDto) {
     return this.userService.createUser(body.name, body.email, body.password);
   }
+
+  
 
   @UseGuards(JwtAuthGuard)
   @Put(':id')
